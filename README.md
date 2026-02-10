@@ -21,22 +21,22 @@ component of the model includes processes regulated by human intervention
 
    The general model form perfectly represent woody population dynamics along time.
 
-   But, to acomodate this results, recruitment mortality must be 55% for shrubs wich, anyway, it's a guessed parameter.
+   But, to acomodate this results, recruitment mortality must be 55% for shrubs and 14% for A.nigra wich, anyway, are guessed parameters.
 
    graphic
 
    Unfortunatly, results presented in the article apparently correspond to a different model, most likely same general model form with other parameters. No published graphic or table can be reproduced.
     
- |                   |     UPNF   |       MBGI     |      FSP   |
+ |                    |     UPNF     |       MBGI    |       FSP   |
  | --- | ---: | ---: | ---: |
- | Tree recruitment   |       3.14   |        2.91   |       0.83  | 
- | Tree density       |     104.39   |       94.45   |      11.63  |
- | Tree basal area    |       3.07   |        2.75   |       0.53  |
- | Shrub recruitment  |     613.94   |      589.53   |      13.06  | 
- | Shrub density      |    4796.42   |     3553.13   |      38.11  | 
- | Tree C storage     |   14450.80   |    12868.67   |    2401.46  |
- | Shrub C storage    |    9051.48   |     5463.02   |     142.66  |
- | Woody C storage    |   23502.27   |    18331.68   |    2544.12  |
+ | Tree recruitment   |       3.14   |        2.91   |       0.86  | 
+ | Tree density       |     108.82   |       98.36   |      13.18  |
+ | Tree basal area    |       3.26   |        2.92   |       0.55  |
+ | Shrub recruitment  |     611.15   |      593.47   |      13.18  | 
+ | Shrub density      |    4819.10   |     3603.61   |      39.60  | 
+ | Tree C storage     |   15185.61   |    13511.11   |    2483.49  |
+ | Shrub C storage    |    9121.07   |     5536.45   |     143.11  |
+ | Woody C storage    |   24306.67   |    19047.56   |    2626.60  |
 
    It's obvious that most values are clearly lower than those presented in article. 
    Most notable disagreement is in recruitment row. That perhaps it's not just a typo but some mistake in model programming by authors. Hardly yearly recruitment could be 74% of total population when higher yearly recruitment parameter is 21% of mature population.
