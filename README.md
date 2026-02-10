@@ -25,7 +25,7 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
  |                    |     UPNF     |       MBGI    |       FSP   |
  | --- | ---: | ---: | ---: |
  | Tree recruitment   |       3.14   |        2.91   |       0.86  | 
- | Tree density       |     108.82   |       98.36   |      13.18  |
+ | Tree density       |     108.82   |       98.36   |      11.67  |
  | Tree basal area    |       3.26   |        2.92   |       0.55  |
  | Shrub recruitment  |     611.15   |      593.47   |      13.18  | 
  | Shrub density      |    4819.10   |     3603.61   |      39.60  | 
