@@ -3,27 +3,22 @@ SmplSimWoody 1.0. A Light FOMSI Simulator
 
 ## The Model
 
-FOMSI (FOrest Model SImulator) is a deterministic model to simulate forest population
-dynamics and predict woody carbon stocks and sequestration rates for
-different silvopastoral systems. The initial conditions (e.g. recruitment
-rate) and management strategies during the simulation sequence
-determined the outputs. The only stochastic component in the model
-was plant mortality rate. The model comprises the assemblage of three
-general model components: a population, a production, and a management
-model. The first component comprises biophysical processes,
-represented by trees and shrubs recruitment, growth, and
-mortality (population model). The second component represents a forest
-exploitation based on population (production model). The third
-component of the model includes processes regulated by human intervention
-(management model). (Filip et al., 2025)
+FOMSI (FOrest Model SImulator) is a deterministic model to simulate forest population dynamics and predict woody carbon stocks and sequestration rates for different silvopastoral systems. The initial conditions (e.g. recruitment rate) and management strategies during the simulation sequence determined the outputs. The only stochastic component in the model was plant mortality rate. The model comprises the assemblage of three general model components: a population, a production, and a management model. The first component comprises biophysical processes, represented by trees and shrubs recruitment, growth, and mortality (population model). The second component represents a forest exploitation based on population (production model). The third component of the model includes processes regulated by human intervention (management model). (Filip et al., 2025)
+
+## The Exercise
+
+To evaluate long term forest and woody carbon dynamics of two silvopastoral systems: Forest management integrated with livestock (herein MBGI) and pretended (or false) silvopastoral (FSP), and to compare these with undisturbed primary native forests (UPNF) (Filip et al., 2025).
 
 ## The Results
-
+   
+   Model details and parameters presented in article are enough complete to allow a succesfull implementation.
+   
    The general model form perfectly represent woody population dynamics along time.
 
    But, to acomodate this results, recruitment mortality must be 55% for shrubs and 14% for A.nigra wich, anyway, are guessed parameters.
 
-   graphic
+   ![FOMSI_10](https://github.com/user-attachments/assets/6bfb765f-e52d-4666-8dc6-5b12c7d4f779)
+
 
    Unfortunatly, results presented in the article apparently correspond to a different model, most likely same general model form with other parameters. No published graphic or table can be reproduced.
     
@@ -41,8 +36,10 @@ component of the model includes processes regulated by human intervention
    It's obvious that most values are clearly lower than those presented in article. 
    Most notable disagreement is in recruitment row. That perhaps it's not just a typo but some mistake in model programming by authors. Hardly yearly recruitment could be 74% of total population when higher yearly recruitment parameter is 21% of mature population.
 
+   Finally, even with different numbers, this results support discussions and considerations presented in the article.
+
 note: 
-     Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceus C storage in disturbed systems, wich at least could balance a little disturbance.   
+     Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.   
     
 
 ## The Program
