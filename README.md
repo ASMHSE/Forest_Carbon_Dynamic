@@ -13,9 +13,10 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
    
    Model details and parameters presented in article are enough complete to allow a succesfull implementation.
    
-   The general model form perfectly represent woody population dynamics along time.
+   Look like the general model form represent woody population dynamics along time as intended.
 
    But, to acomodate this results, recruitment mortality must be 55% for shrubs and 14% for A.nigra wich, anyway, are guessed parameters.
+   Beside, newly recruited trees in a year depends on mature tree population, not entire tree population.
 
    ![FOMSI_10](https://github.com/user-attachments/assets/6bfb765f-e52d-4666-8dc6-5b12c7d4f779)
 
@@ -24,22 +25,24 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
     
  |                    |     UPNF     |       MBGI    |       FSP   |
  | --- | ---: | ---: | ---: |
- | Tree recruitment   |       3.14   |        2.91   |       0.86  | 
- | Tree density       |     108.82   |       98.36   |      11.67  |
- | Tree basal area    |       3.26   |        2.92   |       0.55  |
- | Shrub recruitment  |     611.15   |      593.47   |      13.18  | 
- | Shrub density      |    4819.10   |     3603.61   |      39.60  | 
- | Tree C storage     |   15185.61   |    13511.11   |    2483.49  |
- | Shrub C storage    |    9121.07   |     5536.45   |     143.11  |
- | Woody C storage    |   24306.67   |    19047.56   |    2626.60  |
+ | Tree recruitment   |       3.21   |        2.97   |       0.82  | 
+ | Tree density       |     107.55   |       97.86   |      11.46  |
+ | Tree basal area    |       3.14   |        2.83   |       0.52  |
+ | Shrub recruitment  |     600.50   |      578.33   |      14.94  | 
+ | Shrub density      |    4758.72   |     3520.73   |      47.31  | 
+ | Tree C storage     |   13383.92   |    11964.65   |    2080.32  |
+ | Shrub C storage    |    9005.76   |     5422.01   |     152.45  |
+ | Woody C storage    |   22389.67   |    17386.66   |    2232.76  |
+
 
    It's obvious that most values are clearly lower than those presented in article. 
-   Most notable disagreement is in recruitment row. That perhaps it's not just a typo but some mistake in model programming by authors. Hardly yearly recruitment could be 74% of total population when higher yearly recruitment parameter is 21% of mature population.
+   Most notable disagreement is in recruitment row. That perhaps it's a severe mistake. Hardly yearly recruitment could be 74% of total population when higher yearly recruitment parameter is 21% of mature population.
 
    Finally, even with different numbers, this results support discussions and considerations presented in the article.
 
 note: 
-     Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.   
+     1 - Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.
+      2 - Here dead roots carbon is included in Tree C storage. Article don't explicit were this carbon is accounted.
     
 
 ## The Program
@@ -50,9 +53,9 @@ Framework : ObjAsm C.2  - masters : [Main Developer](https://github.com/ObjAsm/O
 
 Math syntax macros: [SmplMath](https://github.com/ASMHSE/SmplMath)
 
-Current buildings is for Windows platform, 64 bits, and ANSI outputs.
-
 Programming is Object Oriented, and consist of WoodyCarbon Simulator object controlling FOMSI model object runnings, and a Single Document Interface applications descendent object who run the simulations and show graphics and tables. 
+
+Current building is for Windows platform, 64 bits, and ANSI outputs.
 
 ## Reference
 
