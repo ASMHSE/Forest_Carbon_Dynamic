@@ -1,0 +1,23 @@
+#define IDC_SAB_TEXTh 1002
+#ifndef IDOK
+  #define IDOK 1
+#endif
+#define IDC_DAB_TEXT 101
+#define IDC_DAB_ICON 100
+#ifndef IDC_STATIC
+  #define IDC_STATIC -1
+#endif
+#define IDC_STC1 1001
+
+DIALOGABOUT DIALOGEX 0,0,195,114
+CAPTION "About"
+FONT 8,"Tahoma",0,0,0
+STYLE 0x90C81884
+EXSTYLE 0x00080000
+BEGIN
+  CONTROL "&OK",IDOK,"Button",0x50010001,150,92,39,16
+  CONTROL "",IDC_DAB_TEXT,"Static",0x50020001,46,9,128,75
+  CONTROL "",IDC_DAB_ICON,"Static",0x50000203,13,9,32,32
+  CONTROL "",IDC_STATIC,"Static",0x10001007,30,86,159,1
+  CONTROL "  ^^     Wickedly crafted     ^^   in Microsoft Assembler (MASM)",IDC_STC1,"Static",0x50000001,33,90,108,18
+END
