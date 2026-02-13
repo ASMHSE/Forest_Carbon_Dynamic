@@ -72,7 +72,7 @@ SDLL_SENTINEL ends
 ;             Arg5: Name -> item structure
 ;             Arg6: Auxiliar register.
 
-; Example:    SDLL_RemoveH esi, Items, Woody0, ebx, cadena, eax
+; Example:    SDLL_AppendH esi, Items, Woody0, ebx, cadena, eax
 
 SDLL_AppendH macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req, Chain:=<chain>, AuxReg:req
 
@@ -91,6 +91,7 @@ endm
 ; Arguments:  Arg1: Register -> Reference Parent object
 ;             Arg2: Name -> Sentinel structure.
 ;             Arg3: Name -> Child object.
+;             Arg4: Name -> item structure
 
 SDLL_InitH macro ParentReg:req, Sentinel:=<items>, ChildObj:req, Chain:=<chain>
 
@@ -107,9 +108,9 @@ endm
 
 ; --------------------------------------------------------------------------------------------------
 ; Macro:      SDLL_BeginLoop
-; Purpose:    Remove a member from the linked list.
+; Purpose:    Travel linked list from Sentinel.
 ; Arguments:  Arg1: Register -> Reference Parent object
-;             Arg2: Name -> Sentinel structure.
+;             Arg2: Name -> parent structure.
 ;             Arg3: Name -> Child object.
 ;             Arg4: Register -> Child object
 ;             Arg5: Name -> item structure
@@ -131,7 +132,7 @@ endm
 ; --------------------------------------------------------------------------------------------------
 ; Macro:      SDLL_EndLoop
 ; Purpose:    End loop througth the linked list.
-; Arguments:  No arguments
+; Arguments:  Arg0: Register -> Child object
 
 SDLL_EndLoop macro ChildReg:req
         _pop ChildReg
@@ -149,6 +150,7 @@ endm
 ;             Arg5: Name -> item structure
 ;             Arg6: Auxiliar register 1.
 ;             Arg7: Auxiliar register 2. If not specified, RefReg is used.
+;             Arg8: Remove conections (can be any text, usually "clean")
 
 ; Example:    SDLL_RemoveH esi, Items, Woody0, ebx, cadena, eax, ecx
 

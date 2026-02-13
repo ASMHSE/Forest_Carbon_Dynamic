@@ -9,6 +9,10 @@
     .data
         TreeBigNum  dd 07FFFFFFFh
 
+	    StabFile    db  "Estable1.stm",0
+	    StabBitness dword  TARGET_BITNESS
+	    StabVersion dword  1
+
         PopulationT  xword 0
         PopulationD  xword 0
         Population1  xword 0
@@ -432,30 +436,48 @@
     MethodEnd
 
     Method FOMSI.ReadPopulations, uses xsi xdi, pFile:POINTER
+        local isok : xword        
         SetObject xsi
 
-        mov xdi, offset $ObjTmpl(DiskStream)
-        OCall xdi::DiskStream.Init, NULL, pFile,0,0,0,0,0,0
-        lea  xax, [xsi].R8_Year
-        OCall xdi::Stream.BinRead,xax, results_size*8
-        DbgDec eax
-
-        OCall [xsi].DeadWood::WoodyPopulationD.Load, xdi
-        Specie = 0
-        repeat 5
-            OCall [xsi].@CatStr(<WP>,%Specie)::@CatStr(<WoodyPopulation>,%Specie).Load, xdi
-            Specie = Specie + 1
-        endm
-        DbgText "-FOMSI.ReadPopulations"
-        OCall xdi::DiskStream.Done
-
-    MethodEnd
-    Method FOMSI.SavePopulations, uses xsi xdi, pFile:POINTER
-        SetObject xsi
-    
+        mov isok, 0
         mov xdi, offset $ObjTmpl(DiskStream)
         OCall xdi::DiskStream.Init, NULL, pFile,0,0,0,0,0,0
         
+        OCall xdi::Stream.BinRead32
+        .if eax == TARGET_BITNESS
+            OCall xdi::Stream.BinRead32
+            .if eax == StabVersion
+            
+		        lea  xax, [xsi].R8_Year
+		        OCall xdi::Stream.BinRead,xax, results_size*8
+		        DbgDec eax
+		
+		        OCall [xsi].DeadWood::WoodyPopulationD.Load, xdi
+		        Specie = 0
+		        repeat 5
+		            OCall [xsi].@CatStr(<WP>,%Specie)::@CatStr(<WoodyPopulation>,%Specie).Load, xdi
+		            Specie = Specie + 1
+		        endm
+    		    mov   isok, 1
+    		.else
+    		    invoke MessageBox,0, $OfsCStr("File version incompatible"), $OfsCStr("Missing stabilized population"), MB_OK    
+		    .endif
+   		.else
+   		    invoke MessageBox,0, $OfsCStr("File bitness incompatible"), $OfsCStr("Missing stabilized population"), MB_OK    
+		.endif        
+        DbgText "-FOMSI.ReadPopulations"
+        OCall xdi::DiskStream.Done
+        mov xax, isok
+    MethodEnd
+    Method FOMSI.SavePopulations, uses xsi xdi, pFile:POINTER
+        SetObject xsi
+
+        mov xdi, offset $ObjTmpl(DiskStream)
+        OCall xdi::DiskStream.Init, NULL, pFile,0,0,0,0,0,0
+        
+        OCall xdi::Stream.BinWrite32, StabBitness
+        OCall xdi::Stream.BinWrite32, StabVersion
+
         lea  xax, [xsi].R8_Year
         OCall xdi::Stream.BinWrite,xax, results_size*8
 

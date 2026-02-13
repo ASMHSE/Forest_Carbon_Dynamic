@@ -8,7 +8,6 @@ include SmplSimWoody_Shared.inc
 
 CStr szIcoName,   "ICON_APP" 
 CStr szIcoEntry,  "ICON_ENTRY" 
-%CStr szAppTitle, "&APP_TITLE" 
 %CStr szAboutText,"&ABOUT_TEXT", 13, 10, \ 
                   "Version &VER_PRODUCTVERSION_STR", 13, 10, \ 
                   "Designed with ObjAsm", 13, 10, \ 
@@ -17,6 +16,13 @@ CStr szIcoEntry,  "ICON_ENTRY"
                           <  -  Build: >, %BUILD_NUMBER, <->, %ASSEMBLER, <->, \
                           %TARGET_MODE_STR, <->, %TARGET_BITNESS, <!">)
 .data
+    % szAppTitle db "&APP_TITLE" 
+	        if TARGET_BITNESS eq 32
+	            db " in 32 bits"            
+	        else
+	            db " in 64 bits"            
+	        endif
+                db 0
         tabla   db 123,"\rtf1\ansi"
                 db 123,"\colortbl ;"
                 db "\red192\green192\blue192;"; 00C0C0C0h

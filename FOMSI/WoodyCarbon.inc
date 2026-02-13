@@ -72,7 +72,7 @@ if IMPLEMENT
                               < 0.0,   0.0,   0.0,   0.0,   0.0,   0.0>,    ; nigra  
                               < 0.0,   0.0,   0.0,   0.0,   0.0,   0.0>,
                               < 0.0,   0.0,   0.0,   0.0,   0.0,   0.0> }
-               
+                  
 Method WoodyCarbon.Init, uses xdi xsi
 
     SetObject xdi
@@ -113,6 +113,7 @@ Method WoodyCarbon.Stabilization, uses xdi
         OCall [xdi].model::FOMSI.StoreModel, i
         invoke  SendMessage, hProgressBar, PBM_SETPOS, i,0
     Next i 
+    mov   [xdi].calculado, 1    
 MethodEnd
 
 Method WoodyCarbon.NoIntervention, uses xdi
@@ -138,6 +139,7 @@ Method WoodyCarbon.NoIntervention, uses xdi
         Destroy [xdi].UPNFmeans
     .endif
     _popv [xdi].UPNFmeans
+    mov   [xdi].calculado, 1    
 MethodEnd
 
 Method WoodyCarbon.FullImpact, uses xdi
@@ -173,6 +175,7 @@ Method WoodyCarbon.FullImpact, uses xdi
         OCall [xdi].model::FOMSI.StoreModel, i
         invoke  SendMessage, hProgressBar, PBM_SETPOS, i,0
     Next i 
+    mov   [xdi].calculado, 1    
 MethodEnd
 Method WoodyCarbon.LowImpact, uses xdi
     local i : xword, turn: xword
@@ -214,6 +217,9 @@ Method WoodyCarbon.LowImpact, uses xdi
         Destroy [xdi].LowImeans
     .endif
     _popv [xdi].LowImeans
+
+    mov   [xdi].calculado, 1    
+
 MethodEnd
 Method WoodyCarbon.IntensiveForage, uses xdi
     local i : xword, turn: xword
@@ -239,7 +245,7 @@ Method WoodyCarbon.IntensiveForage, uses xdi
         Destroy [xdi].FSPmeans
     .endif
     _popv [xdi].FSPmeans
-    
+    mov   [xdi].calculado, 1    
 MethodEnd
 
 Method WoodyCarbon.Run, uses xsi xbx xdi, runtype:xword
@@ -257,11 +263,21 @@ Method WoodyCarbon.Run, uses xsi xbx xdi, runtype:xword
         
     mov  xax, runtype
     .if xax != 0
+        .if xax > 2
+	        invoke FileExist, offset StabFile
+	        .if xax == NULL
+	            invoke MessageBox,NULL,$OfsCStr("File Estable1.stm don't exists.",13,10,13,10, "Run Stabilization to create it."),
+	                                   $OfsCStr("Missing stabilized population"),MB_OK
+	            mov   [xdi].calculado, 0                       
+	            ExitMethod                       
+	        .endif
+        .endif
+        mov  xax, runtype
 	    ; --------------------------------- Initialize model  
 	    .if xax == 1 
 	    	OCall xdi.Initial, addr Undisturbed, TRUE
 	        OCall xdi.Stabilization
-            OCall [xdi].model::FOMSI.SavePopulations, $OfsCStr("Estable1.stm")
+            OCall [xdi].model::FOMSI.SavePopulations, offset StabFile
 
 	    .elseif xax == 2
 	    
@@ -274,25 +290,23 @@ Method WoodyCarbon.Run, uses xsi xbx xdi, runtype:xword
             OCall xdi.Comparisons
 
 	    ; --------------------------------- Strategy
-	    .elseif xax == 4
+	    .elseif xax > 3
 	        OCall xdi.Initial, addr Undisturbed, FALSE 
-            OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
-	        OCall xdi.NoIntervention
-	    .elseif xax == 5
-	        OCall xdi.Initial, addr Undisturbed, FALSE 
-            OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
-	        OCall xdi.FullImpact
-	    .elseif xax == 6    
-	        OCall xdi.Initial, addr Undisturbed, FALSE 
-            OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
-	        OCall xdi.LowImpact
-	    .elseif xax == 7    
-	    	OCall xdi.Initial, addr Undisturbed, FALSE
-            OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
-	        OCall xdi.IntensiveForage
+            OCall [xdi].model::FOMSI.ReadPopulations, offset StabFile
+	        .if xax     
+                mov  xax, runtype
+    		    .if xax == 4
+			        OCall xdi.NoIntervention
+			    .elseif xax == 5
+			        OCall xdi.FullImpact
+			    .elseif xax == 6    
+			        OCall xdi.LowImpact
+			    .elseif xax == 7    
+			        OCall xdi.IntensiveForage
+		        .endif
+	        .endif
 	    .endif
     .endif    
-    mov   [xdi].calculado, 1    
 
     invoke GetTickCount
     mov   xcx, _time
@@ -335,15 +349,15 @@ Method WoodyCarbon.Comparisons, uses xdi xbx xsi
     SetObject xdi
         
     OCall xdi.Initial, addr Undisturbed, FALSE 
-    OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
+    OCall [xdi].model::FOMSI.ReadPopulations, offset StabFile
     OCall xdi.NoIntervention
     OCall [xdi].model::FOMSI.Clean
     OCall xdi.Initial, addr Undisturbed, FALSE 
-    OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
+    OCall [xdi].model::FOMSI.ReadPopulations, offset StabFile
     OCall xdi.LowImpact
     OCall [xdi].model::FOMSI.Clean
 	OCall xdi.Initial, addr FalseSP, FALSE
-    OCall [xdi].model::FOMSI.ReadPopulations, $OfsCStr("Estable1.stm")
+    OCall [xdi].model::FOMSI.ReadPopulations, offset StabFile
     OCall xdi.IntensiveForage
     
     mov   cut, 0

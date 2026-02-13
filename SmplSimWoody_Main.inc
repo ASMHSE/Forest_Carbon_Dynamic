@@ -161,7 +161,7 @@ Method SmplSimWoody.Startup
   invoke LoadBitmap, hInstance, $OfsCStr("BMP_BACKGROUND")
   mov WC.hbrBackground, $invoke(CreatePatternBrush, xax)
   c2m WC.lpszMenuName, $OfsCStr("MENU_APP"), xax
-  c2m WC.lpszClassName, offset szAppTitle, xax
+  c2m WC.lpszClassName, offset szSmplSimWoody, xax
   mov WC.hIcon, $invoke(LoadIcon, hInstance, offset szIcoName)
   mov WC.hCursor, $invoke(LoadCursor, 0, IDC_ARROW)
   m2z WC.hIconSm
@@ -475,11 +475,12 @@ Method SmplSimWoody.Execute, uses xsi
 	.endif
 	_peek xax
 	OCall [xsi].woodymodel::WoodyCarbon.Run, xax
-	mov [xsi].smplplot.calculado, TRUE
-   	OCall xsi.Show
+	.if [xsi].woodymodel.calculado
+		mov [xsi].smplplot.calculado, TRUE
+	   	OCall xsi.Show
+    .endif
 	invoke ShowWindow, [xsi].btRun.hWnd, SW_SHOW
 	invoke ShowWindow, [xsi].progressbar.hWnd, SW_HIDE
-
     mov [xsi].lock1, 0
 MethodEnd
 
