@@ -53,9 +53,9 @@ Framework : ObjAsm C.2  - masters : [Main Developer](https://github.com/ObjAsm/O
 
 Math syntax macros: [SmplMath](https://github.com/ASMHSE/SmplMath)
 
-Programming is Object Oriented, and consist of WoodyCarbon Simulator object controlling FOMSI model object runnings, and a Single Document Interface applications descendent object who run the simulations and show graphics and tables. 
+Programming is Object Oriented, and consist of WoodyCarbon Simulator object controlling FOMSI model object runnings, and a Single Document Interface application descendent object who run the simulations and show graphics and tables. 
 
-Current building is for Windows platform, 32 or 64 bits, and ANSI outputs.
+Current buildings are for Windows platform, 32 or 64 bits, and ANSI outputs.
 
 note: file to store stabilized population is different for each bitness.
 
