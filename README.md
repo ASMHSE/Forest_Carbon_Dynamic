@@ -1,5 +1,5 @@
 # Forest_Carbon_Dynamic
-SmplSimWoody 1.0. A Light FOMSI Simulator
+SmplSimWoody 1.0. A Light FOMSI Simulator in Assembly
 
 ## The Model
 
@@ -16,7 +16,7 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
    Look like the general model form represent woody population dynamics along time as intended.
 
    But, to acomodate this results, recruitment mortality must be 55% for shrubs and 14% for A.nigra wich, anyway, are guessed parameters.
-   Beside, newly tree recruits in a year numerically depends on mature tree population, because if related to entire tree population (DBH > 5), and with published parameters, model fails.
+   Beside, newly tree recruits in a year numerically depends on mature tree population (DBH > 20), because if related to entire tree population (DBH > 5), and with published parameters, model fails.
 
    ![FOMSI_10](https://github.com/user-attachments/assets/6bfb765f-e52d-4666-8dc6-5b12c7d4f779)
 
