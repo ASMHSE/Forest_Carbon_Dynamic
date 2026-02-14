@@ -48,7 +48,6 @@ include macros\WriteFTr.inc
     hProgressBar HWND 0
     hlibRE       HWND 0
 
-MakeObjects LinkedList
 MakeObjects FOMSI\FOMSI
 MakeObjects FOMSI\WoodyCarbon
 MakeObjects SmplPlot\SmplPlot

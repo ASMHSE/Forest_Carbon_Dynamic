@@ -19,30 +19,34 @@ Method SerieGraph.Init, uses xsi, xprior:dword,xcolor:dword, xmod:dword
 	;DbgDec [xsi].Brush
 	mov [xsi].Pen, $invoke( CreatePen, PS_SOLID, 1, xcolor)
 	;DbgDec [xsi].Pen
-	
+	SDLL_InitH xsi,, Puntito
 MethodEnd
 
 Method SerieGraph.CargaPunto , uses xsi xax, x : REAL8, y : REAL8
 	SetObject xsi
 	New Puntito
-;	DbgHex xax,"    Puntito"
 	OCall xax::Puntito.Init, x, y      			;Initialize Puntito instance values
-	OCall [xsi].Puntos::LinkedList.Append, xax 
+    SDLL_AppendH xsi,, Puntito, xax,,xcx 
 MethodEnd
 
-Method SerieGraph.Done, uses xsi
-	;DbgText "SerieGraph Done"
+Method SerieGraph.Clear, uses xsi xbx
+    local fregTLS()
+    ;DbgText "SerieGraph.Clear"
 	SetObject xsi
-
  	invoke DeleteObject, [xsi].Brush
  	;DbgApiError
  	invoke DeleteObject, [xsi].Pen
  	;DbgApiError
-
-	;lea eax, [xsi].Puntos
-	;Destroy eax
-	OCall [xsi].Puntos::LinkedList.Done
-	;jmp @@no1
-	;ff db" AAAAA ",0
-	;@@no1: 
+	SDLL_CleanH xsi,, Puntito, xbx
+MethodEnd
+Method SerieGraph.Done, uses xsi xbx
+    local fregTLS()
+	SetObject xsi
+ 	invoke DeleteObject, [xsi].Brush
+ 	;DbgApiError
+ 	invoke DeleteObject, [xsi].Pen
+ 	;DbgApiError
+    assume xbx : $ObjPtr(Puntito)
+	SDLL_DoneH xsi,, Puntito, xbx
+	assume xbx : nothing
 MethodEnd

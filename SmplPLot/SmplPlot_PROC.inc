@@ -12,16 +12,16 @@ limite equ 088h
 sombreado textequ <0.50> 
 
 .data 
-    CStr szSmplPlot, "SmplPlot"                           ;Creates szDemoApp02 string in .const
+    CStr szSmplPlot, "SmplPlot"     
 
-    rcClient 	RECT {}	  ;                // client area rectangle 
-    ptClientUL	POINT {} ;              // client upper left corner 
-    ptClientLR	POINT {} ;              // client lower right corner 
+    rcClient 	RECT {}	    ; client area rectangle 
+    ptClientUL	POINT {}    ; client upper left corner 
+    ptClientLR	POINT {}    ; client lower right corner 
 
-    ptsBegin	POINTS {} ;        // beginning point 
-    ptsEnd		POINTS {} ;          // new endpoint 
-    ptsPrevEnd	POINTS {} ;      // previous endpoint 
-    ;static BOOL fPrevLine = FALSE; // previous line flag 
+    ptsBegin	POINTS {}   ; beginning point 
+    ptsEnd		POINTS {}   ; new endpoint 
+    ptsPrevEnd	POINTS {}   ; previous endpoint 
+    ;static BOOL fPrevLine = FALSE;  previous line flag 
 
 	gral2 real8 0.0
 	pasada dword 0
@@ -49,6 +49,7 @@ Method SmplPlot.Init, uses xsi, pOwner : POINTER, hParent : HWND
 	        WS_CHILD, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, \ 
 	        hParent, NULL, hInstance, pSelf 
 	invoke ShowWindow, [xsi].hWnd, SW_SHOWNORMAL 
+	SDLL_InitH xsi,, SerieGraph
 
 MethodEnd 
 
@@ -121,17 +122,18 @@ Method SmplPlot.OnMouseDown, uses xsi, wParam : WPARAM, lParam : LPARAM
 	
 	SetObject xsi 
 	
-	
-	OCall [xsi].BaseSeries::LinkedList.GetFirst 
+    assume xax: $ObjPtr(SerieGraph) 
+    SDLL_GetFirst xsi,,SerieGraph, xax
+    assume xax : nothing 
 	.if xax !=NULL 
 	    invope xsi, GetClientRect, [xsi].hWnd, addr [xsi].total 
 	
-	 ; Capture mouse input. 
+	    ; Capture mouse input. 
 	    invope xsi, SetCapture, [xsi].hWnd 
-	;	CalculaMarcos
-	
-	    fSlv8 ptClientUL.x = [xsi].RT.left    ; 
-	    fSlv8 ptClientUL.y = [xsi].RT.top    ; 
+	    
+	    ;	CalculaMarcos
+	    fSlv8 ptClientUL.x = [xsi].RT.left     
+	    fSlv8 ptClientUL.y = [xsi].RT.top     
 	
 	        ; Add one to the right and bottom sides, because the 
 	        ; coordinates retrieved by GetClientRect do not 
@@ -162,7 +164,7 @@ Method SmplPlot.OnMouseMove, uses xsi, wParam : WPARAM, lParam : LPARAM
 	SetObject xsi 
 	
 	  ; When moving the mouse, the user must hold down 
-	     ; the left mouse button to draw lines. 
+      ; the left mouse button to draw lines. 
 	.if (wParam & MK_LBUTTON) 
 	
 	    OCall xsi.selecciona, lParam 
@@ -175,11 +177,11 @@ Method SmplPlot.OnMouseMove, uses xsi, wParam : WPARAM, lParam : LPARAM
 	Method SmplPlot.OnMouseUp, uses xsi, wParam : WPARAM, lParam : LPARAM 
 	SetObject xsi 
 	
-	    ;// The user has finished drawing the line. Reset the 
-	    ;// previous line flag, release the mouse cursor, and 
-	    ;,// release the mouse capture. 
+	    ; The user has finished drawing the line. Reset the 
+	    ; previous line flag, release the mouse cursor, and 
+	    ; release the mouse capture. 
 	
-	    ;fPrevLine = FALSE; 
+	    ; fPrevLine = FALSE; 
 	
 	invoke ClipCursor, NULL 
 	
@@ -373,39 +375,24 @@ Method SmplPlot.BuscaMaximos, uses xsi xbx
 	fstp  [xsi].maximox 
 	
 	mov   inicio, TRUE 
-	
-	lea xax,[xsi].BaseSeries
 
-	OCall [xsi].BaseSeries::LinkedList.GetFirst 
-	mov   xcx, xax 
-	buscase1: 
-	.if xcx != NULL
-	    SetObject xax, LinkedList, [xcx].$Obj(SerieGraph).Puntos 
-	    mov   xcx, xax 
-	    _push xax 
-	    OCall xax::LinkedList.GetFirst 
-	    mov   xcx, xax 
-	  buscase2: 
-	    .if xcx != NULL 
-	        SetObject xbx, Puntito, xcx 
-	        comparaMaximo 
-	        _pop  xax 
-	        _push xax 
-	        OCall xax::LinkedList.GetNext 
-	        mov   xcx, xax 
-	        jmp   buscase2 
-	    .endif 
-	    _pop  xax 
-	    OCall [xsi].BaseSeries::LinkedList.GetNext 
-	    mov   xcx, xax 
-	    jmp   buscase1 
-	.endif 
+    assume xax: $ObjPtr(SerieGraph) 
+    SDLL_BeginLoop xsi,,SerieGraph, xax 
+        assume xbx: $ObjPtr(Puntito)
+	    SDLL_BeginLoop xax,,Puntito, xbx 
+	        comparaMaximo
+	    SDLL_EndLoop xbx
+        assume xbx:nothing 
+    SDLL_EndLoop xax
+    assume xax:nothing
 	@if [xsi].definition.miny fNE 0.0 || [xsi].definition.maxy fNE 0.0
 	    fSlv8 [xsi].minimoy = [xsi].definition.miny
 	    fSlv8 [xsi].maximoy = [xsi].definition.maxy
 	@endif 
-
-
+	@if [xsi].definition.minx fNE 0.0 || [xsi].definition.maxx fNE 0.0
+	    fSlv8 [xsi].minimox = [xsi].definition.minx
+	    fSlv8 [xsi].maximox = [xsi].definition.maxx
+	@endif 
 MethodEnd 
 
 Method SmplPlot.selecciona, uses xsi xbx, cursorCoords : LPARAM 
@@ -447,24 +434,14 @@ Method SmplPlot.selecciona, uses xsi xbx, cursorCoords : LPARAM
 	mov   mousepoint.x, ecx 
 	mov   mousepoint.y, edx 
 	
-	
-	OCall [xsi].BaseSeries::LinkedList.GetFirst 
-	mov   xcx, xax 
-	buscase1e: 
-	.if xcx != NULL 
+    assume xcx : $ObjPtr(SerieGraph) 
+    SDLL_BeginLoop xsi,,SerieGraph, xcx 
 	    mov   guardaserie, xcx 
-	    SetObject xax, LinkedList, [xcx].$Obj(SerieGraph).Puntos 
-	    mov   xcx, xax 
-	    _push xax 
-	    OCall xax::LinkedList.GetFirst 
-	    mov   xcx, xax 
-	  buscase2e: 
-	    .if xcx != NULL 
+	    
+        assume xbx : $ObjPtr(Puntito) 
+	    SDLL_BeginLoop xcx,, Puntito, xbx
 	        .if inicio0 == TRUE 
-	            _push xcx 
-	            mov   guardapunto, xcx 
-	
-	            SetObject xbx, Puntito, xcx 
+	            mov   guardapunto, xbx 
 	
 	            fld   [xsi].minimoy 
 	            fsub  [xbx].y 
@@ -489,36 +466,20 @@ Method SmplPlot.selecciona, uses xsi xbx, cursorCoords : LPARAM
 	            fabs  
 	            fstp  value_c 
 	            .if fLT(value_c, value_s) 
-	                _pop  xcx 
-	                _pop  xcx 
-	                _push xcx 
-	                _push xcx 
 	                fld   value_c 
 	                fstp  value_s 
 	                m2m   [xsi].ssx, a3, eax ;[ebx].x
 	                m2m   [xsi].ssy, a1, eax ;[ebx].y
 	                m2m   [xsi].ssp, guardapunto, xax 
 	                m2m   [xsi].sss, guardaserie, xax 
-	
 	            .endif 
-	            _pop  xcx 
-	
 	        .else 
 	            mov   inicio0, TRUE 
 	        .endif 
-	
-	        _pop  xax 
-	        _push xax 
-	        OCall xax::LinkedList.GetNext 
-	        mov   xcx, xax 
-	        jmp   buscase2e 
-	    .endif 
-	    _pop  xax 
-	    OCall [xsi].BaseSeries::LinkedList.GetNext 
-	    mov   xcx, xax 
-	  ;_pop eax
-	    jmp   buscase1e 
-	.endif 
+	    SDLL_EndLoop xbx 
+        assume xbx : nothing
+    SDLL_EndLoop xcx 
+    assume xcx : nothing
 	
 
 MethodEnd 
@@ -873,16 +834,11 @@ Method SmplPlot.InitSerie, uses xsi xcx, xprior : dword, dcolor : dword, xmod : 
 	;DbgText "Inicia serie 3" 
 	New   SerieGraph 
 	_push xax 
-	;mov   xcx, xax 
-	;DbgHex xax, "           Inicia serie 3"
 	OCall xax::SerieGraph.Init, xprior, dcolor, xmod        ;Initialize Puntito instance values
 	_pop  xax 
 	_push xax 
 
-    ;DbgHex xax,"   en InitSerie"
-	OCall [xsi].BaseSeries::LinkedList.Append, xax
-	lea xax,[xsi].BaseSeries
-	;DbgHex xax , "   BaseSeries"
+    SDLL_AppendH xsi,, SerieGraph, xax,, xcx
 	_pop  xax 
 
 MethodEnd 
@@ -1060,23 +1016,11 @@ Method SmplPlot.Clear, uses xsi
 	
 	SetObject xsi 
 	
-	_push xsi 
-	
-	OCall [xsi].BaseSeries::LinkedList.GetFirst 
-	mov   xcx, xax 
-	buscase1c: 
-	.if xcx != NULL 
-	    _push xcx 
-	    OCall xcx::SerieGraph.Done 
-	    _pop  xcx 
-	
-	    OCall [xsi].BaseSeries::LinkedList.GetNext 
-	    mov   xcx, xax 
-	
-	    jmp   buscase1c 
-	.endif 
-	
-	_pop  xsi 
+    assume xcx : $ObjPtr(SerieGraph) 
+    SDLL_BeginLoop xsi,,SerieGraph, xcx 
+	    OCall xcx::SerieGraph.Clear 
+    SDLL_EndLoop xcx	
+    assume xcx : nothing
 	
 MethodEnd 
 	
@@ -1092,31 +1036,14 @@ Method SmplPlot.Done, uses xsi
 	    ;DbgText "SmplPlot.Done"
 	
 	SetObject xsi 
-	    ;comment Ç
-	
-	_push xsi 
-	
-	 ;OCall xsi.Clear
-	
-	;	invoke SendMessage, [xsi].hWnd, WM_COMMAND, WM_USER,0
-	
-	_pop  xsi 
-	_push xsi 
-	 ;invoke SendMessage, [xsi].hWnd, WM_CLOSE,0,0
-	   ;DbgText "Ahora limìa el resto"
 	
 	ForLp v1, 0, 5 
 	    mov   xcx, v1 
-	    _pop  xsi 
-	    _push xsi 
 	    invoke DeleteObject, [xsi].ColorSeries[xcx*XWORD] 
-	    _pop  xsi 
-	    _push xsi 
 	Next  v1 
-	_pop  xsi 
 	
-	OCall [xsi].BaseSeries::LinkedList.Done 
-	
+    SDLL_DoneH xsi,, SerieGraph, xax
+
 	invoke DeleteObject, [xsi].BLUE_BRUSH 
 	invoke DeleteObject, [xsi].BASE2_BRUSH 
 	invoke DeleteObject, [xsi].EJES1_BRUSH 
@@ -1126,9 +1053,10 @@ Method SmplPlot.Done, uses xsi
 MethodEnd 
 
 Method SmplPlot.InitPlot, uses xsi 
+    local fregTLS()
 	SetObject xsi 
 	
-	OCall [xsi].BaseSeries::LinkedList.Clear 
+    SDLL_CleanH xsi,, SerieGraph, xax
 
 MethodEnd
  

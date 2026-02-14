@@ -114,6 +114,7 @@ endm
 ;             Arg3: Name -> Child object.
 ;             Arg4: Register -> Child object
 ;             Arg5: Name -> item structure
+;             Arg6: AuxReg -> for pseupushing in 64 bits
 
 SDLL_BeginLoop macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req, Chain:=<chain>,AuxReg:=<r10>
     mov   ChildReg, [ParentReg].&Sentinel.SDLL_SENTINEL.pFirstItem
@@ -139,6 +140,21 @@ SDLL_EndLoop macro ChildReg:req
     .endw
     ;DbgText "close loop"
 endm
+
+; --------------------------------------------------------------------------------------------------
+; Macro:      SDLL_GetFirst
+; Purpose:    Travel linked list from Sentinel.
+; Arguments:  Arg1: Register -> Reference Parent object
+;             Arg2: Name -> parent structure.
+;             Arg3: Name -> Child object.
+;             Arg4: Register -> Child object
+;             Arg5: Name -> item structure
+
+SDLL_GetFirst macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req, Chain:=<chain>
+    mov   ChildReg, [ParentReg].&Sentinel.SDLL_SENTINEL.pFirstItem
+    mov   ChildReg, [ChildReg].&Chain.SDLL_ITEM.pNextItem
+endm
+
 
 ; --------------------------------------------------------------------------------------------------
 ; Macro:      SDLL_RemoveH
@@ -224,11 +240,12 @@ endm
 SDLL_DoneH macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req, Chain:=<chain>
     mov ChildReg, [ParentReg].&Sentinel.SDLL_SENTINEL.pFirstItem
     .while ChildReg != NULL
-          assume ChildReg: $ObjPtr(&ChildObj)
-         _pushv [ChildReg].&Chain.SDLL_ITEM.pNextItem    ;Preserve address of next node
-          Destroy ChildReg                                ;Free the linked node
-          _pop   ChildReg                                    ;Restore address of next node
+        assume ChildReg: $ObjPtr(&ChildObj)
+        _pushv [ChildReg].&Chain.SDLL_ITEM.pNextItem    ;Preserve address of next node
+        Destroy ChildReg                                ;Free the linked node
+        _pop   ChildReg                                    ;Restore address of next node
     .endw
+        assume ChildReg : nothing
 endm
 
 ; ——————————————————————————————————————————————————————————————————————————————————————————————————
@@ -244,6 +261,7 @@ endm
 ;
 SDLL_DestroyH macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req, Chain:=<chain>
  
+    ;assume ChildReg: $ObjPtr(&ChildObj)
     mov ChildReg, [ParentReg].&Sentinel.SDLL_SENTINEL.pFirstItem
     mov ChildReg, [ChildReg].&Chain.SDLL_ITEM.pNextItem
     .while ChildReg != NULL
@@ -251,5 +269,7 @@ SDLL_DestroyH macro ParentReg:req, Sentinel:=<items>, ChildObj:req, ChildReg:req
           Destroy ChildReg                                ;Free the linked node
           _pop   ChildReg                                    ;Restore address of next node
     .endw
+    ;assume ChildReg: nothing
+
 endm
 ;---------------------------------------------------------------------------

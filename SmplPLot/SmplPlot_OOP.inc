@@ -65,9 +65,10 @@ PUNTITO struct
 PUNTITO ends
 
 Object Puntito,, Primer
+	RedefineMethod	Init,QWORD, QWORD
+	SENTINEL_I
 	DefineVariable	x, real8, 0.0
 	DefineVariable	y, real8, 0.0
-	RedefineMethod	Init,QWORD, QWORD
 ObjectEnd
 
 Object L_Serie,,Primer
@@ -87,10 +88,20 @@ Object Hit,, Puntito
 ObjectEnd
 
 Object L_Legend,,Primer
-	Embed series, LinkedList
+    SENTINEL_P series
 ObjectEnd
 
 Object SerieGraph, ,Primer
+
+  	RedefineMethod  Done
+  	RedefineMethod  Init, DWORD, DWORD, DWORD    ;-> Prioridad, Color, Modalidad
+ 
+  	VirtualMethod  CargaPunto, REAL8, REAL8    ;-> x, y
+  	VirtualMethod  Clear
+
+    SENTINEL_I
+    SENTINEL_P
+
 	DefineVariable  pName, POINTER, 0
 	DefineVariable  Prioridad, dword, 0	
 	DefineVariable  Color, dword, 0	
@@ -99,17 +110,11 @@ Object SerieGraph, ,Primer
 	DefineVariable  Modo, dword, 0	
 	DefineVariable  Dot, dword, 0	
 
-	Embed			Puntos, LinkedList	
-
 	DefineVariable	maximox, REAL8, 360.0
 	DefineVariable	maximoy, REAL8, 80.0
 	DefineVariable	minimox, REAL8, 0.0
 	DefineVariable	minimoy, REAL8, 0.0
 	
-  	RedefineMethod  Done
-  	RedefineMethod  Init, DWORD, DWORD, DWORD    ;-> Prioridad, Color, Modalidad
- 
-  	VirtualMethod  CargaPunto, REAL8, REAL8    ;-> x, y
 ObjectEnd
 
 Object SmplPlot, ,  Window                    ;Single Document Interface App.
@@ -228,7 +233,8 @@ Object SmplPlot, ,  Window                    ;Single Document Interface App.
 	DefineVariable	unidady, POINTER
 
 	; ---- Multiples --------------------------------
-	Embed			BaseSeries, LinkedList
+	;Embed			BaseSeries, LinkedList
+	SENTINEL_P
   	VirtualMethod  	InitSerie, DWORD, DWORD, DWORD    ;-> Prioridad, Color, Modalidad
 
 	VirtualMethod 	graficaS, HDC

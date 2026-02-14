@@ -33,7 +33,7 @@ CStr szIcoEntry,  "ICON_ENTRY"
                 db 125,13,10, "{\fonttbl{\f0\fnil\fprq1\fcharset0 Tahoma;}}"
                 db "\pard \cf1 \qc \par"    
         cut     db " "     
-		szTest db " \par\cf4\fs50\qc\pa\b * *  SmplSimWoody 1.0 * * \b0",
+		szTest db " \par\cf4\fs50\qc\pa\b * *  SmplSimWoody 1.0  * * \b0",
 		          " \par\par\fs28 \cf3 A light implementation of",13,10,
 		          " \par\fs32\par \cf1 FOrest Management SImulator",13,10,
 		          " \par ( FOMSI, Filip \i et al.\i0   2025  )",13,10,13,10,
