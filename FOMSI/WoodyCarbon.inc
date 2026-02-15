@@ -150,6 +150,9 @@ Method WoodyCarbon.FullImpact, uses xdi
 
     YEARS = 90    
     invoke SendMessage, hProgressBar, PBM_SETRANGE32,0,YEARS
+    if part eq 2
+        OCall [xdi].model::FOMSI.CalculateModel, turn_harvest_tree or turn_harvest_shrub
+    endif
 
     ForLp i, 1, YEARS
         DbgDec xax
@@ -163,7 +166,9 @@ Method WoodyCarbon.FullImpact, uses xdi
             DbgText " ---------------------- Tree Cut "
         .endif
         mov   xax, i
-        dec   xax
+        if part eq 1
+            dec   xax
+        endif
         mov   edx, 0
         mov   cx, 7
         div   cx
@@ -185,6 +190,9 @@ Method WoodyCarbon.LowImpact, uses xdi
 
     YEARS = 90    
     invoke SendMessage, hProgressBar, PBM_SETRANGE32,0,YEARS
+    if part eq 2
+        OCall [xdi].model::FOMSI.CalculateModel, turn_sel_harvest_tree or turn_sel_harvest_shrub
+    endif
 
     ForLp i, 1, YEARS
         DbgDec xax
@@ -198,7 +206,9 @@ Method WoodyCarbon.LowImpact, uses xdi
             DbgText " ---------------------- Tree Cut Low"
         .endif
         mov   xax, i
-        dec   xax
+        if part eq 1
+            dec   xax
+        endif
         mov   edx, 0
         mov   cx, 7
         div   cx

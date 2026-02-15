@@ -25,14 +25,14 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
     
  |                    |     UPNF     |       MBGI    |       FSP   |
  | --- | ---: | ---: | ---: |
- | Tree recruitment   |       3.21   |        2.97   |       0.82  | 
- | Tree density       |     107.55   |       97.86   |      11.46  |
- | Tree basal area    |       3.14   |        2.83   |       0.52  |
- | Shrub recruitment  |     600.50   |      578.33   |      14.94  | 
- | Shrub density      |    4758.72   |     3520.73   |      47.31  | 
- | Tree C storage     |   13383.92   |    11964.65   |    2080.32  |
- | Shrub C storage    |    9005.76   |     5422.01   |     152.45  |
- | Woody C storage    |   22389.67   |    17386.66   |    2232.76  |
+ | Tree recruitment   |       3.14   |        2.92   |       0.82  | 
+ | Tree density       |     107.53   |       97.88   |      11.55  |
+ | Tree basal area    |       3.16   |        2.82   |       0.53  |
+ | Shrub recruitment  |     607.59   |      569.98   |      13.97  | 
+ | Shrub density      |    4732.47   |     3441.79   |      42.16  | 
+ | Tree C storage     |   13393.10   |    11875.31   |    2116.72  |
+ | Shrub C storage    |    6937.36   |     5299.03   |     147.23  |
+ | Woody C storage    |   22430.46   |    17174.34   |    2263.95  |
 
 
    It's obvious that most values are clearly lower than those presented in article. 
