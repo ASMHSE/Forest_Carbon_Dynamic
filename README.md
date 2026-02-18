@@ -43,6 +43,7 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
 ### notes: 
    - Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.
    - Here dead roots carbon is included in Tree C storage. Article don't explicit were this carbon is accounted.
+   - Graphic and table above result with Aspidosperma quebracho-blanco target equal to 26 tree/ha. Probably authors set that target to 41 tree/ha accord to supplementary material. But that don't reproduce article results either.
 
 ## The Program
 
