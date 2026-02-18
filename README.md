@@ -40,10 +40,9 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
 
    Finally, even with different numbers, this results support discussions and considerations presented in the article.
 
-note: 
-     1 - Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.
-      2 - Here dead roots carbon is included in Tree C storage. Article don't explicit were this carbon is accounted.
-    
+### notes: 
+   - Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.
+   - Here dead roots carbon is included in Tree C storage. Article don't explicit were this carbon is accounted.
 
 ## The Program
 
