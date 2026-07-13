@@ -48,6 +48,7 @@ SmplMath/documentation/* linguist-documentation
 *.doc       binary
 *.docx      binary
 *.swf       binary
+*.html      text eol=crlf
 
 # Scripts
 *.vbs       text eol=crlf diff=astextplain
