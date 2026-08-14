@@ -317,15 +317,23 @@
                 if Specie eq 1
                     fSlv8 [xsi].R8_QuebrachoBlanco = Density
                     fSlv8 [xsi].R8_QBlancoH = MeanHeight
+                    fSlv8 [xsi].R8_QBlancoMA = MaxAge
+                    fSlv8 [xsi].R8_QBlancoMA2 = MeanAge
                 elseif Specie eq 2
                     fSlv8 [xsi].R8_QuebrachoColorado = Density
                     fSlv8 [xsi].R8_QColoradoH = MeanHeight
+                    fSlv8 [xsi].R8_QColoradoMA = MaxAge
+                    fSlv8 [xsi].R8_QColoradoMA2 = MeanAge
                 elseif Specie eq 3
                     fSlv8 [xsi].R8_Mistol = Density
                     fSlv8 [xsi].R8_MistolH = MeanHeight
+                    fSlv8 [xsi].R8_MistolMA = MaxAge
+                    fSlv8 [xsi].R8_MistolMA2 = MeanAge
                 elseif Specie eq 4
                     fSlv8 [xsi].R8_Algarrobo = Density
                     fSlv8 [xsi].R8_AlgarroboH = MeanHeight
+                    fSlv8 [xsi].R8_AlgarroboMA = MaxAge
+                    fSlv8 [xsi].R8_AlgarroboMA2 = MeanAge
                 endif    
                 fSlvW [xsi].R8_Mortality += [xdi].XD_MortalityFlow
             assume xdi:nothing

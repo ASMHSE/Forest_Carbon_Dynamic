@@ -78,9 +78,6 @@
         MethodEnd
 
             MoveToDeadWood macro
-                ;if Specie gt 0
-                ;int 3
-                ;endif
                 _push xbx
                 SDLL_RemoveH xdi,,@CatStr(<Woody>,%Specie),xbx,, xax, xcx, clean
                 _pop xbx
@@ -136,6 +133,7 @@
             if Specie gt 0
                 fSlv8 BasalArea = 0
                 fSlv8 MeanHeight = 0
+                fSlv8 MaxAge = 0 
             endif
             mov   Population, 0
             mov   MaturePopulation, 0
@@ -177,6 +175,9 @@
 	                    fSlvW MeanHeight += [xbx].R8_Height
 		                inc Total
 	                ;.endif
+	                .if fGT([xbx].R8_Age, MaxAge)
+	                    fSlv8 MaxAge = [xbx].R8_Age 
+	                .endif
                 endif
                 
             SDLL_EndLoop xbx
@@ -343,6 +344,13 @@
             if Specie eq 0
                 fSlv8 MeanAge = SumAge / Population / ShrubResScale
                 fSlv8 CalcAge = (AbovegrCarbon/Population/CarbonInBiomass-0.74)/0.1/ ShrubResScale
+            else
+                .if fGT(Population,0.0)    
+                    fSlv8  = SumAge / Population
+                .else
+                    fldz
+                .endif
+                fstp MeanAge
             endif
 
             assume xbx: nothing 

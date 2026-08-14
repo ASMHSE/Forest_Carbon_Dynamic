@@ -7,8 +7,8 @@
 part equ 2
 
 % include @Environ(OBJASM_PATH)\Code\Macros\Model.inc   ;Include & initialize standard modules
-;SysSetup OOP, WIN64, ANSI_STRING, DEBUG(WND,INFO,RESGUARD)            ;Load OOP files and OS related objects
-SysSetup OOP, WIN32, ANSI_STRING;, DEBUG(WND,INFO)            ;Load OOP files and OS related objects
+SysSetup OOP, WIN64, ANSI_STRING;, DEBUG(WND,INFO,RESGUARD)            ;Load OOP files and OS related objects
+;SysSetup OOP, WIN32, ANSI_STRING;, DEBUG(WND,INFO)            ;Load OOP files and OS related objects
 
 % include &IncPath&Windows\CommCtrl.inc
 % includelib &LibPath&Windows\Comctl32.lib

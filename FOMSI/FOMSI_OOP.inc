@@ -34,7 +34,7 @@
     ClassesVar nRecruitmentStage,   1   ,  8    ,  8    ,  4    ,  4  
     ClassesVar RecruitmentRateMin, 10.0 ,  5.0  ,  2.0  ,  2.0  ,  2.0 
     ClassesVar RecruitmentRateMax, 21.0 , 15.0  , 11.0  , 20.0  , 11.0 
-;    ClassesVar RecruitmentMort,     0.3 ,  0.08 ,  0.08 ,  0.16 ,  0.16 ; not reasonable results with this numbers 
+    ;ClassesVar RecruitmentMort,     0.3 ,  0.08 ,  0.08 ,  0.16 ,  0.16 ; not reasonable results with this numbers 
     ClassesVar RecruitmentMort,     0.55 ,  0.08 ,  0.08 ,  0.16 ,  0.14  ; perfect  
   
     ClassesVar MortalityRate,       0.05,  0.013,  0.014,  0.013,  0.018
@@ -164,14 +164,15 @@
 
             DefinemR8   Timber
             DefinemR8   Recruitment
+            DefinemR8   MeanAge
             if Specie eq 0
                 ;DefinemR8   Sprouting                ; count
                 DefinemXD   TargetSprouting, iShrubConst
-                DefinemR8   MeanAge
                 DefinemR8   CalcAge
             else
                 DefinemR8   BasalArea
                 DefinemR8   MeanHeight
+                DefinemR8   MaxAge
                 ;DefinemXD   ReductionCats   
                 ;DefinemXD   ReductionLimit, 6 dup (0.0)
                 ;DefinemR8   ReductionRate , 6 dup (0.0)
@@ -210,14 +211,22 @@
         DefVar QColoradoH             
         DefVar MistolH                      ; 25
         DefVar AlgarroboH
+        DefVar QBlancoMA
+        DefVar QColoradoMA             
+        DefVar MistolMA                      
+        DefVar AlgarroboMA
+        DefVar QBlancoMA2
+        DefVar QColoradoMA2             
+        DefVar MistolMA2                      
+        DefVar AlgarroboMA2
         DefVar Stumps
         DefVar DeadCarbon
         DefVar DeadMeanAge                  
 	endm
-	results_size equ 30      
+	results_size equ 38      
 	
     FOMSI_results2 macro
-	    DefVar TreeCstorage                 ; 35
+	    DefVar TreeCstorage                 ; 35+8
 	    DefVar ShrubCstorage
 	    DefVar WoodyCstorage
     endm
@@ -226,12 +235,13 @@ Object FOMSIResult,, Primer
     SENTINEL_I
     DefType = 0
     FOMSI_results
-    DefinemR8 ShrubDensityScaled            ; 30
+    DefinemR8 ShrubDensityScaled            ; 30+8
     DefinemR8 TreeRecruitmentScaled
     DefinemR8 TreeRecruitment2PopScaled
     DefinemR8 BelowgroundTreeCarbonFull
     DefinemR8 ShrubRecruitmentScaled         
     FOMSI_results2
+    
 ObjectEnd
 
 Object FOMSI,,Streamable
@@ -255,7 +265,6 @@ Object FOMSI,,Streamable
     SENTINEL_P                          ; for results
     DefType = 0
     FOMSI_results
-    DefineVariable spacer, POINTER, 10 dup (0)                 
     Embed DeadWood, WoodyPopulationD
     Specie = 0
     repeat 5

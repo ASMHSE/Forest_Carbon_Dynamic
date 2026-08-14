@@ -18,21 +18,24 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
    But, to acomodate this results, recruitment mortality must be 55% for shrubs and 14% for A.nigra wich, anyway, are guessed parameters.
    Beside, newly tree recruits in a year numerically depends on mature tree population (DBH > 20), because if related to entire tree population (DBH > 5), and with published parameters, model fails.
 
-   ![FOMSI_10](https://github.com/user-attachments/assets/6bfb765f-e52d-4666-8dc6-5b12c7d4f779)
-
+  | ![FOMSI_10](https://github.com/user-attachments/assets/6bfb765f-e52d-4666-8dc6-5b12c7d4f779) |
+  | :---: |
+  |  Forest species in a 1000 years running for stabilization. |
 
    Unfortunatly, results presented in the article apparently correspond to a different model, most likely same general model form with other parameters. No published graphic or table can be reproduced.
     
- |                    |     UPNF     |       MBGI    |       FSP   |
- | --- | ---: | ---: | ---: |
- | Tree recruitment   |       3.14   |        2.92   |       0.82  | 
- | Tree density       |     107.53   |       97.88   |      11.55  |
- | Tree basal area    |       3.16   |        2.82   |       0.53  |
- | Shrub recruitment  |     607.59   |      569.98   |      13.97  | 
- | Shrub density      |    4732.47   |     3441.79   |      42.16  | 
- | Tree C storage     |   13393.10   |    11875.31   |    2116.72  |
- | Shrub C storage    |    6937.36   |     5299.03   |     147.23  |
- | Woody C storage    |   22430.46   |    17174.34   |    2263.95  |
+  | *                  |     UPNF     |       MBGI    |       FSP   |
+  | --- | ---: | ---: | ---: |
+  | Tree recruitment (n)   |       3.14   |        2.92   |       0.82  | 
+  | Tree density (n)      |     107.53   |       97.88   |      11.55  |
+  | Tree basal area (m2)   |       3.16   |        2.82   |       0.53  |
+  | Shrub recruitment (n) |     607.59   |      569.98   |      13.97  | 
+  | Shrub density (n) |    4732.47   |     3441.79   |      42.16  | 
+  | Tree C storage (kg) |   13393.10   |    11875.31   |    2116.72  |
+  | Shrub C storage (kg)    |    6937.36   |     5299.03   |     147.23  |
+  | Woody C storage  (kg)  |   22430.46   |    17174.34   |    2263.95  |
+  
+        * Yearly means values per ha from a 90 years simulation 
 
 
    It's obvious that most values are clearly lower than those presented in article. 
@@ -43,7 +46,7 @@ To evaluate long term forest and woody carbon dynamics of two silvopastoral syst
 ### notes: 
    - Published Table 3 say "mean weigthed C in the system" where have to say "mean weigthed total woody C storage", because herbaceous layer is not accounted. That is important because you should expect higher herbaceous C storage in disturbed systems, wich at least could balance a little disturbances.
    - Here dead roots carbon is included in Tree C storage. Article don't explicit were this carbon is accounted.
-   - Graphic and table above results from simulations with Aspidosperma quebracho-blanco target equal to 26 trees/ha. Probably authors set that target to 41 trees/ha accord to supplementary material. But that don't reproduce article results either.
+   - Graphic and table above results from simulations with Aspidosperma quebracho-blanco target equal to 26 trees/ha. Probably authors set that target to 41 trees/ha accord to supplementary material (like initial state for stabilization). But that don't reproduce article results either.
 
 ## The Program
 
@@ -61,4 +64,4 @@ note: file to store stabilized population is different for each bitness.
 
 ## Reference
 
-Filip I. D., Peri P. L., Fern√°ndez P., Loto D., Kees S. M., Banegas N., Nasca J., Sacido M., Faverin C., Vibart R. Modelling woody carbon dynamics in tropical dry forests: A case study of the Dry Chaco Region. Ecological Modelling. 2026. Vol. 512. p. 111401.
+Filip I. D., Peri P. L., Fern·ndez P., Loto D., Kees S. M., Banegas N., Nasca J., Sacido M., Faverin C., Vibart R. Modelling woody carbon dynamics in tropical dry forests: A case study of the Dry Chaco Region. Ecological Modelling. 2026. Vol. 512. p. 111401.

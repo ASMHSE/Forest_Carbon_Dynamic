@@ -88,7 +88,7 @@ if IMPLEMENT
 	    sar0_3$ db "R.trees",0
 	    sar0_4$ db "R.shrubs",0
 	    sar0   POINTER offset sar0_1$,offset sar0_2$,offset sar0_3$,offset sar0_4$
-    GraphDef0 SmplGraphDef {0.0,0.0,0.0,600.0,100.0,4,offset graf0$, offset ser0,offset sar0, 0, 9,30,31,34,0,0,NULL}
+    GraphDef0 SmplGraphDef {0.0,0.0,0.0,600.0,100.0,4,offset graf0$, offset ser0,offset sar0, 0, 9,30+8,31+8,34+8,0,0,NULL}
 
     graf1$ db "BasalArea",0
 	    ser1_0$ db "years",0
@@ -104,7 +104,7 @@ if IMPLEMENT
 	    ser2_4$ db "Shrubs blw",0
 	    ser2_5$ db "Dead Roots",0
    	    ser2   POINTER offset ser2_0$,offset ser2_1$,offset ser2_2$,offset ser2_3$,offset ser2_4$,offset ser2_5$
-    GraphDef2 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,5,offset graf2$, offset ser2, (offset ser2+POINTER), 0, 3, 4, 1, 2,28,0,NULL}
+    GraphDef2 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,5,offset graf2$, offset ser2, (offset ser2+POINTER), 0, 3, 4, 1, 2,28+8,0,NULL}
 
     graf3$ db "Timber Production",0
     GraphDef3 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,1,offset graf3$,NULL,NULL, 0, 7, 0, 0, 0,0,0,NULL}
@@ -127,12 +127,12 @@ if IMPLEMENT
     GraphDef5 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,2,offset graf5$,NULL,NULL, 0,17,18, 0, 0,0,0,NULL}
     
     graf6$ db "Stumps",0
-    GraphDef6 SmplGraphDef {0.0,0.0,0.0,100.0,10.0,1,offset graf6$,NULL,NULL, 0, 27, 0, 0, 0,0,0,NULL}
+    GraphDef6 SmplGraphDef {0.0,0.0,0.0,100.0,10.0,1,offset graf6$,NULL,NULL, 0, 27+8, 0, 0, 0,0,0,NULL}
 
     graf7$ db "DeadMeanAge",0
-    GraphDef7 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,1,offset graf7$,NULL,NULL, 0, 29, 0, 0, 0,0,0,NULL}
+    GraphDef7 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,1,offset graf7$,NULL,NULL, 0, 29+8, 0, 0, 0,0,0,NULL}
 
-    graf8$ db "Trees Height",0
+    graf8$ db "Trees Mean Height",0
 	    ser8_0$ db "years",0
 	    ser8_1$ db "Q.Bl.",0
 	    ser8_2$ db "Q.Col.",0
@@ -141,9 +141,39 @@ if IMPLEMENT
 	    ser8   POINTER offset ser8_0$, offset ser8_1$,offset ser8_2$,offset ser8_3$,offset ser8_4$
     GraphDef8 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,4,offset graf8$,offset ser8,(offset ser8+POINTER), 0,23,24,25,26,0,0,NULL}
     
+    graf9$ db "Trees Max Age",0
+	    ser9_0$ db "years",0
+	    
+	    ser9_1$ db "Q.Blanco",0
+	    ser9_2$ db "Q.Colorado",0
+	    ser9_3$ db "Mistol",0
+	    ser9_4$ db "A.Negro",0
+	    ser9   POINTER offset ser9_0$,offset ser9_1$,offset ser9_2$,offset ser9_3$,offset ser9_4$
+	    sar9_1$ db "Q.Bl.",0
+	    sar9_2$ db "Q.Col.",0
+	    sar9_3$ db "Mist.",0
+	    sar9_4$ db "Alg.",0
+	    sar9   POINTER offset sar9_1$,offset sar9_2$,offset sar9_3$,offset sar9_4$
+    GraphDef9 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,4,offset graf4$,offset ser9,offset sar9, 0,27,28,29,30,0,0,NULL}
+
+    graf10$ db "Trees Mean Age",0
+	    ser10_0$ db "years",0
+	    
+	    ser10_1$ db "Q.Blanco",0
+	    ser10_2$ db "Q.Colorado",0
+	    ser10_3$ db "Mistol",0
+	    ser10_4$ db "A.Negro",0
+	    ser10   POINTER offset ser10_0$,offset ser10_1$,offset ser10_2$,offset ser10_3$,offset ser10_4$
+	    sar10_1$ db "Q.Bl.",0
+	    sar10_2$ db "Q.Col.",0
+	    sar10_3$ db "Mist.",0
+	    sar10_4$ db "Alg.",0
+	    sar10   POINTER offset sar10_1$,offset sar10_2$,offset sar10_3$,offset sar10_4$
+    GraphDef10 SmplGraphDef {0.0,0.0,0.0,0.0,0.0,4,offset graf4$,offset ser10,offset sar10, 0,27+4,28+4,29+4,30+4,0,0,NULL}
+
     GraphDefs POINTER offset GraphDef0,offset GraphDef1,offset GraphDef2,offset GraphDef3,
                       offset GraphDef4,offset GraphDef5,offset GraphDef6,offset GraphDef7,
-                      offset GraphDef8   
+                      offset GraphDef8,offset GraphDef9,offset GraphDef10   
 
 .code
 
@@ -218,15 +248,17 @@ Method SmplSimWoody.OnCreate, uses xbx xsi, wParam:WPARAM, lParam:LPARAM
 		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_ADDSTRING, 6, $OfsCStr("  Stumps             ")
 		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_ADDSTRING, 7, $OfsCStr("  Dead Roots Mean Age")
 		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_ADDSTRING, 8, $OfsCStr("  Trees Height       ")
+		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_ADDSTRING, 9, $OfsCStr("  Trees Max Age      ")
+		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_ADDSTRING,10, $OfsCStr("  Trees Mean Age     ")
 
 		invoke SendMessage, [xsi].chMostrarA.hWnd, CB_SETCURSEL, [xsi].MuestraA, 0
 
 	OCall [xsi].chMostrarB::ComboBox.Init, xsi, [xsi].hWnd, offset PropCBMostrarB
 		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 0, $OfsCStr("  Not Apply         ")
 		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 1, $OfsCStr("  Undisturbed       ")
-		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 2, $OfsCStr("  Full Impact       ")
 		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 2, $OfsCStr("  Low Impact        ")
-		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 3, $OfsCStr("  False SP          ")
+		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 3, $OfsCStr("  Full Impact       ")
+        invoke SendMessage, [xsi].chMostrarB.hWnd, CB_ADDSTRING, 4, $OfsCStr("  False SP          ")
 
 		invoke SendMessage, [xsi].chMostrarB.hWnd, CB_SETCURSEL, [xsi].MuestraB, 0
 
@@ -234,7 +266,7 @@ Method SmplSimWoody.OnCreate, uses xbx xsi, wParam:WPARAM, lParam:LPARAM
 		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_ADDSTRING, 0, $OfsCStr("  Not Apply         ")
 		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_ADDSTRING, 1, $OfsCStr("  Stab. for Undisturbed/MBGI  ")
 		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_ADDSTRING, 2, $OfsCStr("  Stab. for False SP          ")
-		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_ADDSTRING, 2, $OfsCStr("  Comparison Means            ")
+		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_ADDSTRING, 3, $OfsCStr("  Comparison Means            ")
 
 		invoke SendMessage, [xsi].chMostrarC.hWnd, CB_SETCURSEL, [xsi].MuestraC, 0
 

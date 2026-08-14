@@ -308,9 +308,9 @@ Method WoodyCarbon.Run, uses xsi xbx xdi, runtype:xword
     		    .if xax == 4
 			        OCall xdi.NoIntervention
 			    .elseif xax == 5
-			        OCall xdi.FullImpact
-			    .elseif xax == 6    
 			        OCall xdi.LowImpact
+			    .elseif xax == 6    
+			        OCall xdi.FullImpact
 			    .elseif xax == 7    
 			        OCall xdi.IntensiveForage
 		        .endif
